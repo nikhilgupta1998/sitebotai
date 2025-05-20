@@ -5,9 +5,9 @@ export default {
   HERO_HEADING: 'What do you want to build?',
   HERO_DESC: 'Prompt, run, edit, and deploy full-stack web apps.',
   INPUT_PLACEHOLDER: 'What you want to build?',
-  SIGNIN_HEADING: 'Continue With Sitebot AI',
-  SIGNIN_SUBHEADING: 'To use Sitebot AI you must log into an existing account or create one.',
-  SIGNIn_AGREEMENT_TEXT: 'By using Sitebot AI, you agree to the collection of usage data for analytics.',
+  SIGNIN_HEADING: 'Continue With Sitebot.ai',
+  SIGNIN_SUBHEADING: 'To use Sitebot.ai you must log into an existing account or create one.',
+  SIGNIn_AGREEMENT_TEXT: 'By using Sitebot.ai, you agree to the collection of usage data for analytics.',
 
 
   DEFAULT_FILE: {
@@ -85,21 +85,21 @@ export default config;
       name: 'Starter',
       tokens: '120K',
       value: 120000,
-      desc: 'Designed for professionals who need to use Sitebot AI a few times per week.',
+      desc: 'Designed for professionals who need to use Sitebot.ai a few times per week.',
       price: 9.99
     },
     {
       name: 'Pro',
       tokens: '2.5M',
       value: 2500000,
-      desc: 'Designed for professionals who need to use Sitebot AI a few times per week.',
+      desc: 'Designed for professionals who need to use Sitebot.ai a few times per week.',
       price: 19.99
     },
     {
       name: 'Unlimted (License)',
       tokens: 'Unmited',
       value: 999999999,
-      desc: 'Designed for professionals who need to use Sitebot AI a few times per week.',
+      desc: 'Designed for professionals who need to use Sitebot.ai a few times per week.',
       price: 49.99
     }
   ]

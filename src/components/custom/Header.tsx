@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Button } from "../ui/button";
 import Colors from "@/data/Colors";
 import { UserDetailContext } from "@/context/UserDetailContext";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Download, Rocket } from "lucide-react";
 import { useSidebar } from "../ui/sidebar";
 import { ActionContext } from "@/context/ActionContext";
@@ -14,6 +14,7 @@ import axios from "axios";
 import uuid4 from "uuid4";
 
 const Header = () => {
+  const router = useRouter();
   const userContext = useContext(UserDetailContext);
   const actionContext = useContext(ActionContext);
   const { toggleSidebar } = useSidebar();
@@ -54,7 +55,14 @@ const Header = () => {
 
   return (
     <div className="p-4 flex justify-between items-center">
-      <Image src={"/logo.png"} alt="logo" width={40} height={40} />
+      <div
+        onClick={() => router.push("/")}
+        className="flex items-center gap-4 cursor-pointer"
+      >
+        <Image src={"/logo.png"} alt="logo" width={40} height={40} />
+        <h1 className="font-bold text-xl">Sitebot.ai</h1>
+      </div>
+
       {!userContext?.userDetail ? (
         <div className="flex gap-5">
           <Button variant={"ghost"} onClick={() => googleLogin()}>
