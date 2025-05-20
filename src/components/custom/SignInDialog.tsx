@@ -22,7 +22,7 @@ interface Props {
 }
 
 const SignInDialog: React.FC<Props> = ({ opened, close }) => {
-  const { userDetail, setUserDetail } = useContext(UserDetailContext);
+  const userContext = useContext(UserDetailContext);
   const CreateUser = useMutation(api.user.CreateUser);
 
   const googleLogin = useGoogleLogin({
@@ -45,7 +45,7 @@ const SignInDialog: React.FC<Props> = ({ opened, close }) => {
         localStorage.setItem("user", JSON.stringify(user));
       }
       close();
-      setUserDetail(userInfo?.data);
+      userContext?.setUserDetail(userInfo?.data);
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
