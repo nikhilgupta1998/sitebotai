@@ -7,6 +7,11 @@ import { usePathname } from "next/navigation";
 import { Download, Rocket } from "lucide-react";
 import { useSidebar } from "../ui/sidebar";
 import { ActionContext } from "@/context/ActionContext";
+import { useMutation } from "convex/react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { api } from "../../../convex/_generated/api";
+import axios from "axios";
+import uuid4 from "uuid4";
 
 const Header = () => {
   const userContext = useContext(UserDetailContext);
@@ -20,13 +25,43 @@ const Header = () => {
     });
   };
 
+  const CreateUser = useMutation(api.user.CreateUser);
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse);
+      const userInfo = await axios.get(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        { headers: { Authorization: "Bearer " + tokenResponse?.access_token } }
+      );
+
+      console.log(userInfo);
+      const user = userInfo.data;
+      await CreateUser({
+        name: user?.name,
+        email: user?.email,
+        picture: user?.picture,
+        uid: uuid4(),
+      });
+      if (typeof window !== undefined) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      close();
+      userContext?.setUserDetail(userInfo?.data);
+    },
+    onError: (errorResponse) => console.log(errorResponse),
+  });
+
   return (
     <div className="p-4 flex justify-between items-center">
       <Image src={"/logo.png"} alt="logo" width={40} height={40} />
       {!userContext?.userDetail ? (
         <div className="flex gap-5">
-          <Button variant={"ghost"}>Sign In</Button>
+          <Button variant={"ghost"} onClick={() => googleLogin()}>
+            Sign In
+          </Button>
           <Button
+            onClick={() => googleLogin()}
             style={{
               backgroundColor: Colors.BLUE,
             }}
