@@ -32,15 +32,11 @@ const Provider: React.FC<Props> = ({ children }) => {
   }, []);
   const IsAuthenticated = async () => {
     if (typeof window !== "undefined") {
-      const userData = localStorage.getItem("user");
-      if (!userData) {
-        window.open("/", "_self");
-        return;
-      }
+      const fetchUser = localStorage.getItem("user");
 
-      const user = JSON.parse(userData);
-      if (!user?.email) {
-        window.open("/", "_self");
+      const user = fetchUser ? JSON.parse(fetchUser) : null;
+      if (!user) {
+        router.push("/");
         return;
       }
 
