@@ -56,7 +56,7 @@ const Header = () => {
   return (
     <div className="p-4 flex justify-between items-center">
       <div
-        onClick={() => router.push("/")}
+        onClick={() => window.open("/", "_self")}
         className="flex items-center gap-4 cursor-pointer"
       >
         <Image src={"/logo.png"} alt="logo" width={40} height={40} />

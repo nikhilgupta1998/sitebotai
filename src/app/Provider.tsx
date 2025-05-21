@@ -34,13 +34,13 @@ const Provider: React.FC<Props> = ({ children }) => {
     if (typeof window !== "undefined") {
       const userData = localStorage.getItem("user");
       if (!userData) {
-        router.push("/");
+        window.open("/", "_self");
         return;
       }
 
       const user = JSON.parse(userData);
       if (!user?.email) {
-        router.push("/");
+        window.open("/", "_self");
         return;
       }
 

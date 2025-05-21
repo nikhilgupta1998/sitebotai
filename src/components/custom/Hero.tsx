@@ -42,7 +42,7 @@ const Hero = () => {
       user: userContext?.userDetail?._id,
       message: [msg],
     });
-    router.push("/workspace/" + workspaceId);
+    window.open(`/workspace/${workspaceId}`, "_self");
     console.log(workspaceId);
   };
   return (

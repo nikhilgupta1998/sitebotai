@@ -41,7 +41,7 @@ function SideBarFooterMenu() {
   ];
   const onOptionClock = (option: IOptionType) => {
     if (option?.path) {
-      router.push(option?.path);
+      window.open(option?.path, "_self");
     }
   };
 
