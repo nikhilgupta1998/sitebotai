@@ -9,6 +9,7 @@ import {
 import React from "react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { googleLogout } from "@react-oauth/google";
 
 interface IOptionType {
   name: string;
@@ -16,6 +17,7 @@ interface IOptionType {
     Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
   >;
   path?: string;
+  onClick?: () => void;
 }
 
 function SideBarFooterMenu() {
@@ -37,12 +39,19 @@ function SideBarFooterMenu() {
     {
       name: "Sign Out",
       icon: LogOut,
+      onClick: () => {
+        googleLogout();
+        localStorage.removeItem("user");
+        window.open("/", "_self");
+      },
     },
   ];
   const onOptionClock = (option: IOptionType) => {
     if (option?.path) {
       window.open(option?.path, "_self");
+      return;
     }
+    option?.onClick?.();
   };
 
   return (

@@ -46,9 +46,11 @@ const Hero = () => {
     console.log(workspaceId);
   };
   return (
-    <div className="flex flex-col items-center mt-36 gap-2">
-      <h2 className="font-bold text-4xl">{Lookup.HERO_HEADING}</h2>
-      <p className="text-gray-400 font-medium">{Lookup.HERO_DESC}</p>
+    <div className="flex flex-col px-6 lg:px-0 items-center lg:mt-36 mt-20 pb-12 gap-2">
+      <h2 className="font-bold text-4xl text-center">{Lookup.HERO_HEADING}</h2>
+      <p className="text-gray-400 font-medium text-center">
+        {Lookup.HERO_DESC}
+      </p>
 
       <div
         className="p-5 border rounded-xl max-w-2xl w-full"

@@ -13,7 +13,7 @@ import { UserDetailContext } from "@/context/UserDetailContext";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import uuid4 from "uuid4";
-import { useMutation } from "convex/react";
+import { useConvex, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
 interface Props {
@@ -24,16 +24,15 @@ interface Props {
 const SignInDialog: React.FC<Props> = ({ opened, close }) => {
   const userContext = useContext(UserDetailContext);
   const CreateUser = useMutation(api.user.CreateUser);
+  const convex = useConvex();
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse);
       const userInfo = await axios.get(
         "https://www.googleapis.com/oauth2/v3/userinfo",
         { headers: { Authorization: "Bearer " + tokenResponse?.access_token } }
       );
 
-      console.log(userInfo);
       const user = userInfo.data;
       await CreateUser({
         name: user?.name,
@@ -44,8 +43,12 @@ const SignInDialog: React.FC<Props> = ({ opened, close }) => {
       if (typeof window !== undefined) {
         localStorage.setItem("user", JSON.stringify(user));
       }
+      // Fetch user from the database
+      const result = await convex.query(api.user.GetUser, {
+        email: userInfo?.data?.email as string, // Now TypeScript knows this is safe
+      });
       close();
-      userContext?.setUserDetail(userInfo?.data);
+      userContext?.setUserDetail(result);
     },
     onError: (errorResponse) => console.log(errorResponse),
   });

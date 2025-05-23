@@ -12,7 +12,7 @@ const WorkspaceHistory = () => {
   const { toggleSidebar } = useSidebar();
 
   useEffect(() => {
-    if (userContext?.userDetail) {
+    if (userContext?.userDetail?._id) {
       GetAllWorkspace();
     }
   }, [userContext?.userDetail]);
@@ -32,7 +32,7 @@ const WorkspaceHistory = () => {
           <Link href={`/workspace/${workspace?._id}`} key={index}>
             <h2
               onClick={toggleSidebar}
-              className="text-sm text-gray-400 mt-2 font-light hover:text-white cursor-pointer"
+              className="text-sm text-gray-400 line-clamp-1 mt-2 font-light hover:text-white cursor-pointer"
             >
               {workspace?.message?.[0]?.content}
             </h2>

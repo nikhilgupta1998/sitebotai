@@ -19,7 +19,7 @@ const AppSideBar = () => {
       {" "}
       <Sidebar>
         <SidebarHeader className="p-5">
-          <Button className="mt-5">
+          <Button onClick={() => window.open("/", "_self")} className="mt-5">
             <MessageCircleCodeIcon /> Start New Chat
           </Button>
         </SidebarHeader>

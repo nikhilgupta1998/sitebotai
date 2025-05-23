@@ -7,7 +7,7 @@ import { MessagesContext } from "@/context/MessagesContext";
 // import { IMessagesType } from "@/modals/IMessage";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { api } from "../../convex/_generated/api";
 import { useConvex } from "convex/react";
 import { SidebarProvider } from "@/components/ui/sidebar";
@@ -23,8 +23,7 @@ const Provider: React.FC<Props> = ({ children }) => {
   const [messages, setMessages] = useState<any>(null);
   const [userDetail, setUserDetail] = useState<any>(null);
   const [action, setAction] = useState();
-
-  const router = useRouter();
+  const pathname = usePathname();
   const convex = useConvex();
 
   useEffect(() => {
@@ -35,17 +34,19 @@ const Provider: React.FC<Props> = ({ children }) => {
       const fetchUser = localStorage.getItem("user");
 
       const user = fetchUser ? JSON.parse(fetchUser) : null;
-      if (!user) {
-        router.push("/");
+      if (!user && pathname !== "/") {
+        window.open("/", "_self");
         return;
       }
 
-      // Fetch user from the database
-      const result = await convex.query(api.user.GetUser, {
-        email: user.email as string, // Now TypeScript knows this is safe
-      });
+      if (user) {
+        // Fetch user from the database
+        const result = await convex.query(api.user.GetUser, {
+          email: user.email as string, // Now TypeScript knows this is safe
+        });
 
-      setUserDetail(result);
+        setUserDetail(result);
+      }
     }
   };
 
